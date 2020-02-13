@@ -17,6 +17,7 @@ running = True
 stock_dict = {"ROMAINE":0, "SPRING_MIX":0, "ARUGALA":0, "KALE":0, "TOMATO":0, "CUCUMBER":0, "CRANBERRY":0, "CHEDDAR_CHEESE":0, "FETA_CHEESE":0, "BLUE_CHEESE":0, "BACON":0, "CROUTONS":0, "SUNFLOWER_SEEDS":0, "WALNUTS":0, "ONIONS":0, "OLIVES":0, "BELL_PEPPERS":0, "ITALIAN":0, "RANCH":0, "FRENCH":0, "DONE":0, "CANCEL":0}
 ## Stock Dict (Total vs Used)
 in_stock = {"ROMAINE":{"72":0}, "SPRING_MIX":{"120":0}, "ARUGALA":{"72":0}, "KALE":{"120":0}, "TOMATO":{"168":0}, "CUCUMBER":{"200":0}, "CRANBERRY":{"150":0}, "CHEDDAR_CHEESE":{"300":0}, "FETA_CHEESE":{"120":0}, "BLUE_CHEESE":{"90":0}, "BACON":{"300":0}, "CROUTONS":{"240":0}, "SUNFLOWER_SEEDS":{"120":0}, "WALNUTS":{"90":0}, "ONIONS":{"500":0}, "OLIVES":{"300":0}, "BELL_PEPPERS":{"250":0}, "ITALIAN":{"300":0}, "RANCH":{"300":0}, "FRENCH":{"300":0}, "DONE":{"0":0}, "CANCEL":{"0":0}}
+price_dict = {"ROMAINE":60.00, "SPRING_MIX":16.74, "ARUGALA":66.00, "KALE":6.60, "TOMATO":288, "CUCUMBER":26.4, "CRANBERRY":35.28, "CHEDDAR_CHEESE":48.00, "FETA_CHEESE":51.00, "BLUE_CHEESE":234.00, "BACON":132.00, "CROUTONS":60.00, "SUNFLOWER_SEEDS":111.00, "WALNUTS":96.00, "ONIONS":28.00, "OLIVES":24.00, "BELL_PEPPERS":89.75, "ITALIAN":18.00, "RANCH":12.00, "FRENCH":9.86, "DONE":0.00, "CANCEL":0.00}
 
     
 ## Function that resets the values of key,value pairs for each ingredient category.
@@ -246,10 +247,10 @@ def stock_check():
             if (used > 0):
                 ## If 2/3rds of stock used or more...
                 if ((int(stocked) - used) <= (int(stocked) / 3)):
-                    print("****====****\nOrder a new shipment of {}. There are {} servings remaining of {} total.\n****====****".format(ingredient, (int(stocked) - used), stocked))
+                    print("****====****\nOrder a new shipment of {}. There are {} servings remaining of {} total.\n\tThis will cost ${}.\n****====****".format(ingredient, (int(stocked) - used), stocked, price_dict[ingredient]))
             ## If used not greater than 0...
             else:
-                print("--\nYou do not need a new shipment of {}. There are {} servings remaining of {} total.".format(ingredient, (int(stocked) - used), stocked))
+                print("--\nYou do not need a new shipment of {}. There are {} servings remaining of {} total.\n\tA new shipment would cost : ${}.".format(ingredient, (int(stocked) - used), stocked, price_dict[ingredient]))
 
 ## Error Handling and User Input Collection
 stock_temp = ""
@@ -275,7 +276,7 @@ if (stock_temp == manager_password):
             query = input("\tPlease enter an ingredient : ")
             for ingredient,ratio in in_stock.items():
                 if (query.upper() == ingredient):
-                    print("=-=\n'Starting Stock' : Used\n{}\n=-=".format(in_stock[ingredient]))
+                    print("=-=\n['Starting Stock' : Used]\n{}\n\tPrice of new stock : ${}\n=-=".format(in_stock[ingredient], price_dict[ingredient]))
             stock_q = ""
         ## If "2" is input...
         elif (stock_q == "2"):
